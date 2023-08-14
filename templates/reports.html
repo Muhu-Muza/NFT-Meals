@@ -1,0 +1,149 @@
+{% load static %} 
+{% block content%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  </head>
+  <body class="selection">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li>
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    
+                </ul>
+                
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+              <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+        
+        </div>
+    
+       
+    </div>
+    </div>
+   <div class="report">
+    <div class="hero">
+        <div class="hero-item hero-top"><h2>REPORTS </h2></div>      
+    </div>
+    
+    <div class="reports-container">
+    <div class="report-content orders-1">
+        <div class="card-report">
+            <div class="title"><h2>ORDERS MADE</h2><i class="fas fa-utensils" style="border: 2px solid rgb(13, 13, 13); border-radius: 60%; padding: 10px; background-color: black;"></i></div>
+             
+            
+            <h3 style="color: black; padding-bottom: 10px;margin-top: 20px;">10000</h3>
+            
+                <h3 style="font-size: 18px;"><i class="fas fa-arrow-up" style="color: rgb(5, 132, 60);margin-right: 5px;"></i>3.14% Today</h3>
+           
+            <div class="card-container">
+                
+            </div>
+        </div>
+        </div>
+        
+        
+
+        <div class="report-content orders-1">
+            <div class="card-report">
+                <div class="title"></i><h2>MOST ORDERED FOOD</h2><i class="fas fa-hamburger" style="border: 2px solid rgb(13, 13, 13); border-radius: 70%; padding: 7px; background-color: black;"></i></div>
+                
+                <h3 style="font-size: 18px;"><i class="fas fa-arrow-up" style="color: rgb(5, 132, 60);margin-right: 5px; margin-top: 20px;"></i>3.14% Rice</h3>
+                <h3 style="font-size: 18px;"><i class="fas fa-arrow-down" style="color: rgb(161, 34, 6);margin-right: 5px;"></i>1.14% Beans</h3>
+                
+                <h3 style="font-size: 18px;"><i class="fas fa-arrow-up" style="color: rgb(11, 5, 132);margin-right: 5px;"></i>2.14% Greens   Last week</h3>
+               
+                <div class="card-container">
+                   
+                    
+                </div>
+           
+                
+          </div>  
+        </div>
+    
+    
+
+    <div class="report-content orders-1">
+        <div class="card-report">
+            <div class="title"></i><h2>DAILY ORDERS</h2><i class="fas fa-users" style="border: 2px solid rgb(13, 13, 13); border-radius: 70%; padding: 7px; background-color: black;"></i></div>
+           
+            <h3 style="color: black; padding-bottom: 10px;margin-top: 20px;">10000</h3> 
+            <h3 style="font-size: 18px;"><i class="fas fa-arrow-up" style="color: rgb(5, 132, 60);margin-right: 5px; margin-top: 20px;"></i>3.14% Last Week</h3>
+           
+            <div class="card-container">
+               
+                
+            </div>
+       
+            
+      </div>  
+    </div>
+
+    
+</div>
+
+
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+      const navLinks = document.querySelector('.nav-links ul');
+  
+      // Toggle menu on click of the mobile menu icon
+      mobileMenuIcon.addEventListener('click', function () {
+          navLinks.classList.toggle('show');
+      });
+  
+      // Close menu when clicking outside the menu
+      document.addEventListener('click', function (event) {
+          if (!navLinks.contains(event.target) && !mobileMenuIcon.contains(event.target)) {
+              navLinks.classList.remove('show');
+          }
+      });
+  
+      // Show menu options on hover
+      navLinks.addEventListener('mouseenter', function () {
+          navLinks.classList.add('show');
+      });
+  
+      // Hide menu options on hover out
+      navLinks.addEventListener('mouseleave', function () {
+          navLinks.classList.remove('show');
+      });
+  });
+  
+  </script>
+
+</body>
+</html>
+{% endblock %}

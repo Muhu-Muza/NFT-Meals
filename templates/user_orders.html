@@ -1,0 +1,145 @@
+{% load static %}
+
+{% block content%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/print-styles.css' %}" media="print">
+
+</head>
+<body class="selection">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                    <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    
+                </ul>
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+
+              <div class="mobile-nav-panel">
+                <ul>
+                  <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+                  <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+                  <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+                  <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+                  <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+                  {% endif %}
+                  
+                  <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+  
+              </ul>
+            </div>
+
+              <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+    </div>
+    </div>
+    
+
+    <div class="order-content orders">
+        <div class="order-list-1 px">
+            <div class="order-head">
+                <div class="order-title">
+                    <h1>Orders made for {{ day_of_week }}, {{ formatted_date }} </h1>
+                </div>
+                <div class="print-button">
+                    <button><a href="#" onclick="window.print();" class="no-print">Print</a></button>
+                </div>
+            </div>
+            
+           
+            <!-- <div class="print-btn">
+                <button><a href="#" onclick="window.print();" class="no-print">Print</a></button>
+            </div> -->
+            <table class="food-menu">
+                <thead>
+                    <tr>
+                        <th colspan="1" class="table-head"><h3>First name</h3></th>
+                        <th colspan="1" class="table-head"><h3>Food Choices</h3></th>
+                        <th colspan="1" class="table-head"><h3>Time of Order</h3></th>
+                        <th colspan="1" class="table-head"><h3>Date of Order</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if user_orders %}
+                        {% for order in user_orders %}
+                            <tr>
+                                <td class="menu-name">{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                                <td class="choice">
+                                    {% for food_item in order.food_items.all %}
+                                        {{ food_item.name }}
+                                        {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="choice"> last edit was at {{ order.time_of_order }} </td>
+                                <td class="choice">{{ order.order_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No orders placed yet.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+  <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+        const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+        const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+        const overlay = document.querySelector(".overlay");
+
+        mobileMenuIcon.addEventListener("click", function() {
+            mobileNavPanel.classList.toggle("show");
+            mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+        });
+
+    });
+  
+  </script>
+  
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+
+
+{% endblock content %}
+
+
+
+

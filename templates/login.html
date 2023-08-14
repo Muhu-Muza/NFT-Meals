@@ -1,0 +1,90 @@
+{% load static %}
+
+{% block content%}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+    
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome/font-awesome.min.css' %}">
+
+    <!-- <link rel="stylesheet" href="{%static 'css/style.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+
+
+    <style>
+        .rounded-card {
+            border-radius: 20px; /* Adjust this value to control the roundness of the edges */
+        }
+    </style>
+</head>
+<body class="img js-fullheight" style="background-image: url('{% static "img/bg.jpg" %}');">
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center"
+             style="display: flex; justify-content: center; align-items: center; height: 50vh;">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0 rounded-card"
+                     style="background-color: rgba(224, 224, 212, 0.18); padding: 20px;">
+                    <h3 class="mb-4 text-center" style="padding: 15px;"><b>LOGIN</b></h3>
+                    <!-- Display error messages if any -->
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li
+                        {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form action="{% url 'login' %}" method="post" class="signin-form">
+                        {% csrf_token %}
+                        <div class="form-group" style="padding: 10px;">
+                            <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="username" required>
+                        </div>
+                        <div class="form-group" style="padding: 10px;">
+                            <input id="password-field" type="password" name="password" class="form-control"
+                                   placeholder="Password" autocomplete="current-password" required>
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group" style="padding: 10px;">
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50" style="padding: 10px;">
+                                <label class="checkbox-wrap checkbox-primary">Remember Me
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="w-50 text-md-right" style="padding: 10px;">
+                                <a href="{% url 'reset_password' %}" style="color: #fff">Forgot Password</a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding: 1px;">
+                            <p class="text-center">New here? <a href="{% url 'register' %}"
+                                                                style="color: #fbceb5">Register</a></p>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock content %}
+

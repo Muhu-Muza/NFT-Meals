@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- Breadcrumb-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="">
+    <meta name="description" content="">
+    <title>500</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <link rel="stylesheet" href="{% static '@coreui/all.min.css' %}">
+
+  </head>
+<body>
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="clearfix">
+              <h1 class="float-start display-3 me-4">500</h1>
+              <h4 class="pt-3">😕, we have a problem!</h4>
+              <p class="text-medium-emphasis">This page you is temporarily unavailable.</p>
+            </div>
+           
+            <div class="d-flex justify-content-center"><a href="{% url 'book' %}"><button class="btn btn-sm btn-primary text-white" type="button">Home</button></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+{% load static %}
+
+{% load custom_filters %}
+
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+</head>
+<body>
+
+    <div class="header-alt">
+      <div class="nav">
+        <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+        <div class="nav-links">
+            <ul>
+                <li class="{% if request.path == '/book/' %}active{% endif %}">
+                    <a href="{% url 'book' %}">Book</a>
+                </li>
+                <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                {% if user.is_superuser %}
+                <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                {% endif %}
+                
+                <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+            </ul>
+            
+        </div>
+        <div class="mobile-menu-icon">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="mobile-nav-panel">
+            <ul>
+              <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+              <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+              {% if user.is_superuser %}
+              <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+              <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+              <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+              <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+              {% endif %}
+              
+              <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+
+          </ul>
+        </div>
+        
+        <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    </div>
+
+        <!-- <div class="hero">
+            <div class="hero-item hero-top"><h2>EDIT MENU</h2></div>
+            <div class="hero-item hero-bottom"><h4></h4></div>
+        </div> -->
+    </div>
+
+    <form id="orderForm" method="post" action="{% url 'book' %}">
+      {% csrf_token %}
+
+   <div class="main">
+            {% if user_has_order %}
+                {% if not user_has_ordered_today %}
+                <div class="table-container">
+                    <div class="table-column">
+                        <div class="item-head"><strong>Main Foods</strong> </div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "food" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="table-column">
+                        <div class="item-head"><strong>Sauces</strong></div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "sauces" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="table-column">
+                        <div class="item-head"><strong>Extras</strong></div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "drinks" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- <input type="hidden" id="food_item_selected" name="food_item_selected" value="">
+                <div class="btn"><button type="submit" onclick="get_good_items(); submitForm();">Submit</button></div> -->
+                {% else %}
+
+                <div class="selection-alert book-alert">
+                    <div class="choice-info">
+                        <p>You've made a lunch order. Redirect to edit your lunch order from below.</p>
+                    </div>
+                    <div class="choice-info">
+                        <p><strong>Note: </strong> You can only edit your order before 6:00pm</p>
+                    </div>
+                    <div class="choice-btn bk">
+                        <a href="{% url 'edit_selection' %}"><button type="button"><span>Edit Choices</span></button></a>
+                    </div>
+                </div>
+
+            {% endif %}
+            {% else %}
+              <div class="choice-info">
+                <!-- <p>You haven't made a lunch order yet. Please select items from the menu.</p> -->
+              </div>
+                <div class="table-container">
+                    <div class="table-column">
+                        <div class="item-head"><strong>Main Foods</strong> </div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "food" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="table-column">
+                        <div class="item-head"><strong>Sauces</strong></div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "sauces" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="table-column">
+                        <div class="item-head"><strong>Extras</strong></div>
+                        {% for food_item in food_items %}
+                        {% if food_item.foodType == "drinks" %}
+                        <label class="label-item">
+                            <input type="checkbox"
+                                   id="{{ food_item.id }}"
+                                   data_type="food_item"
+                                   value="{{ food_item.id }}"
+                                   {% if food_item.is_active %}checked{% endif %}>
+                            {{ food_item.name }}
+                        </label>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- <input type="hidden" id="food_item_selected" name="food_item_selected" value="">
+                <div class="btn"><button type="submit" onclick="get_good_items(); submitForm();">Submit</button></div> -->
+            {% endif %}
+        </div>
+  
+
+  </form>
+
+  <!-- <script>
+    function get_good_items() {
+        var item_ar = [];
+        var selected_items = $('[data_type="food_item"].selected');
+
+        if (selected_items.length > 0) {
+            $.each(selected_items, function(key, value) {
+                console.log(key + ": id: " + value.id);
+                item_ar.push(value.id);
+            });
+        }
+        // Save data to the hidden input field
+        $("#food_item_selected").val(item_ar);
+        console.log(item_ar);
+    }
+
+    function submitForm() {
+        $("#orderForm").submit();
+    }
+</script> -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+          const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+          const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+          const overlay = document.querySelector(".overlay");
+  
+          mobileMenuIcon.addEventListener("click", function() {
+              mobileNavPanel.classList.toggle("show");
+              mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+          });
+
+        // Listen for checkbox changes
+        $('input[data_type="food_item"]').on('change', function() {
+            const foodItemId = $(this).attr('id');
+            const is_active = this.checked;
+            
+            toggleFoodItem(foodItemId, is_active);
+        });
+  
+      });
+    
+    </script>
+
+<script>
+    var toggleFoodItemURL = "{% url 'toggle_food_item' %}";
+</script>
+
+<script>
+    function toggleFoodItem(foodItemId) {
+        $.ajax({
+            type: 'POST',
+            url: toggleFoodItemURL,  // Use the generated URL variable
+            data: {
+                'food_item_id': foodItemId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    var button = $('[data_type="food_item"][id="' + foodItemId + '"]').next('button');
+                    button.text(response.is_active ? 'Active' : 'Inactive');
+                    button.attr('class', response.is_active ? 'active-button' : 'inactive-button'); // Update button appearance
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle errors if necessary
+            }
+        });
+    }
+</script>
+
+
+
+
+   
+
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock content %}

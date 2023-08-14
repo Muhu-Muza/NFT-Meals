@@ -1,0 +1,285 @@
+{% load static %} 
+{% block content%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}" />
+
+    <style>
+      .mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Off-screen initially */
+    width: 250px;
+    height: 100%;
+    /* background-color: rgba(0, 0, 28, 0.9); */
+    background-color: #00001c;
+    text-decoration: none;
+    transition: left 0.3s ease-in-out;
+    z-index: 999;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim overlay color */
+    display: none;
+    z-index: 998;
+}
+
+.mobile-nav-panel.show {
+    left: 0; /* Show the panel when class "show" is added */
+}
+
+.mobile-nav-panel.show ~ .overlay {
+    display: block; /* Show the overlay when panel is open */
+}
+
+/* .mobile-nav-panel .close-btn {
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+} */
+
+.mobile-nav-panel ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mobile-nav-panel ul li {
+    padding: 15px;
+    border-bottom: 1px solid #3d4157;
+    background-color: rgba(0, 0, 28, 0.4);
+    /* background-color: #000024; */
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.mobile-nav-panel ul li:active {
+    padding: 15px;
+    border-bottom: 1px solid #3d4157;
+    background-color: #35357a;
+}
+
+.mobile-nav-panel ul li a {
+    text-decoration: none;
+    color: #fff;
+    /* font-size: 17px;
+    font-weight: 900; */
+}
+
+.mobile-nav-panel a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.mobile-nav-panel a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.mobile-menu-icon .bar {
+    width: 25px;
+    height: 3px;
+    margin: 4px auto;
+    /* background-color: #000; */
+    transition: 0.4s;
+}
+
+.mobile-menu-icon {
+    display: none; /* Hide the hamburger icon on larger screens */
+}
+
+
+.mobile-menu-icon.open .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-icon.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-icon.open .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-4px, -6px);
+}
+
+.out-btn {
+  width: 100%;
+  background-color: #ca012c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #fefefe;
+  font-weight: 900;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+    .mobile-nav-panel {
+        left: -250px; /* Hide the panel by default */
+    }
+
+    .nav-links {
+        display: none; /* Hide the regular navigation links on smaller screens */
+    }
+
+    .mobile-menu-icon {
+        display: block; /* Show the hamburger icon on smaller screens */
+    }
+}
+
+    </style>
+  </head>
+  <body class="selection">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                    <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    
+                </ul>
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+
+              <div class="mobile-nav-panel">
+                <ul>
+                  <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+                  <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+                  <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+                  <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+                  <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+                  {% endif %}
+                  
+                  <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+  
+              </ul>
+            </div>
+              <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+        
+        </div>
+    
+      </div>
+    </div>
+
+    <div class="order-content orders">
+      <div class="order-list-2">
+
+        <h1>Reservations for {{ day_of_week }}, {{ formatted_date }}</h1>
+        <table class="food-menu">
+          <thead>
+            <tr>
+              <th colspan="2" class="table-header"><h3>Main Food</h3></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for food_item in food_items %} 
+            {% if food_item.foodType == 'food' %}
+            <tr>
+              <td class="menu-item">{{ food_item.name }}</td>
+              <td class="quantity">{{ food_item.num_users }}</td>
+            </tr>
+            {% endif %} 
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="food-menu">
+          <thead>
+            <tr>
+              <th colspan="2" class="table-header"><h3>Sauces</h3></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for food_item in food_items %} 
+            {% if food_item.foodType == 'sauces' %}
+            <tr>
+              <td class="menu-item">{{ food_item.name }}</td>
+              <td class="quantity">{{ food_item.num_users }}</td>
+            </tr>
+            {% endif %} 
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="food-menu">
+          <thead>
+            <tr>
+              <th colspan="2" class="table-header"><h3>Extras</h3></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for food_item in food_items %} 
+            {% if food_item.foodType == 'drinks' %}
+            <tr>
+              <td class="menu-item">{{ food_item.name }}</td>
+              <td class="quantity">{{ food_item.num_users }}</td>
+            </tr>
+            {% endif %} 
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="choice-btn">
+          <a href="{% url 'user_orders' %}"
+            ><button><span>View User Orders</span></button></a
+          >
+        </div>
+      </div>
+
+      <!-- <div class="order-img px">
+          <img src="{% static 'img/market.jpeg' %}" alt="African Market">
+      </div>  -->
+    </div>
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function() {
+        const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+        const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+        const overlay = document.querySelector(".overlay");
+
+        mobileMenuIcon.addEventListener("click", function() {
+            mobileNavPanel.classList.toggle("show");
+            mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+        });
+
+    });
+
+    </script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    
+  </body>
+</html>
+
+{% endblock content %}

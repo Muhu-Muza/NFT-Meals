@@ -1,0 +1,363 @@
+{% load static %}
+
+{% block content%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+    <link rel="stylesheet" href="{% static '@coreui/icons/css/all.min.css' %}">
+</head>
+<body class="selection groceries">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                    <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    
+                </ul>
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <div class="mobile-nav-panel">
+                <ul>
+                  <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+                  <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+                  <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+                  <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+                  <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+                  {% endif %}
+                  
+                  <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+  
+              </ul>
+            </div>
+
+            <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+        </div>
+
+    </div>
+
+    <div class="content-content">
+
+        
+        <div class="content-info-info">
+            <div class="content-info-menu-menu px">
+                <div class="choice-title menu-title"><h2>Main Foods</h2></div>
+                <div class="grid-container-menu">
+                    {% for food_item in food_items %}
+                    {% if food_item.foodType == "food" %}
+                        <div class="grid-item">
+                            <button class="menu-btn" onclick="openDeleteModal({{ food_item.id }}, '{{ food_item.name }}')">
+                                <span>{{ food_item.name }} <i class="cil-trash"></i></span>
+                            </button>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+      
+                <div class="choice-btn choice-menu-btn" padding="10px">
+                    <button onclick="openModal('addFoodItem')" class="addItemBtn"><span><i class="cil-plus"></i>Foods</span></button>
+                </div>  
+            </div>
+            
+            <div class="content-info-menu-menu px">
+                <div class="choice-title menu-title"><h2>Sauces</h2></div>
+                
+                <div class="grid-container-menu">
+                    {% for food_item in food_items %}
+                    {% if food_item.foodType == "sauces" %}
+                        <div class="grid-item">
+                            <button class="menu-btn" onclick="openDeleteModal({{ food_item.id }}, '{{ food_item.name }}')">
+                                <span>{{ food_item.name }} <i class="cil-trash"></i></span>
+                            </button>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+                <div class="choice-btn choice-menu-btn">
+                    <button class="addItemBtn" onclick="openModal('addSauces')" class="addItemBtn"><span><i class="cil-plus"></i>Sauces</span></button>
+                </div>
+            </div>
+            
+            <div class="content-info-menu-menu px">
+                <div class="choice-title menu-title"><h2>Extras</h2></div>
+                <div class="grid-container-menu">
+                    {% for food_item in food_items %}
+                    {% if food_item.foodType == "drinks" %}
+                        <div class="grid-item">
+                            <button class="menu-btn" onclick="openDeleteModal({{ food_item.id }}, '{{ food_item.name }}')">
+                                <span>{{ food_item.name }} <i class="cil-trash"></i></span>
+                            </button>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                
+                <div class="choice-btn choice-menu-btn">
+                    <button class="addItemBtn" onclick="openModal('addDrinks')" class="addItemBtn"><span><i class="cil-plus"></i>Extras</span></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- <button onclick="openModal('menuChoice1')">Open Modal</button> -->
+    <!-- <button onclick="document.getElementById('menuChoice1').style.display='block'">Open Modal</button> -->
+<!-- Delete FoodItem Modal -->
+<div id="deleteFoodItem" class="modal">
+    <span onclick="document.getElementById('deleteFoodItem').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" method="post">
+        {% csrf_token %}
+        <div class="modal-container">
+            <h1>Delete Item</h1>
+            <!-- Show the selected food item's name here -->
+            <p>Are you sure you want to delete Menu Item <span id="foodItemName"></span>?</p>
+            <input type="hidden" name="foodItemId" id="foodItemIdInput" value="">
+            <div class="clearfix">
+                <button type="button" class="cancelbtn" onclick="document.getElementById('deleteFoodItem').style.display='none'">Cancel</button>
+                <button type="submit" class="deletebtn">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function openDeleteModal(foodItemId, foodItemName) {
+        const modal = document.getElementById('deleteFoodItem');
+        const form = modal.querySelector('form');
+        form.action = '{% url "delete_food_item" %}';
+        form.method = 'post';
+
+        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+
+        const foodItemIdInput = document.getElementById('foodItemIdInput');
+        foodItemIdInput.value = foodItemId;
+
+        const foodItemNameSpan = document.getElementById('foodItemName');
+        foodItemNameSpan.innerText = foodItemName;
+
+        form.appendChild(csrfInput);
+
+        modal.style.display = 'block';
+    }
+</script>
+                                        <!-- DELETE MODAL ENDS HERE -->                                                                                         
+
+
+    <!-- Add FoodItem Modal -->
+    <div id="addFoodItem" class="modal">
+        <span class="close" title="Close Modal" onclick="document.getElementById('addFoodItem').style.display='none'">&times;</span>
+        <form class="modal-content" method="post">
+            {% csrf_token %}
+            <div class="modal-container">
+                <h1>Add Food Item</h1>
+                <input type="text" name="newItem" id="newItem" placeholder="Enter Main Food Item" required oninput="checkFoodItem()">
+                <div id="foodItemMessage" class="food-item-message"></div>
+                <input type="hidden" name="newItemType" value="food">
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn" onclick="document.getElementById('addFoodItem').style.display='none'">Cancel</button>
+                    <button type="submit" id="submitBtn" class="submitbtn">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Add Sauces Modal -->
+    <div id="addSauces" class="modal">
+        <span class="close" title="Close Modal" onclick="document.getElementById('addSauces').style.display='none'">&times;</span>
+        <form class="modal-content" method="post">
+            {% csrf_token %}
+            <div class="modal-container">
+                <h1>Add Sauces</h1>
+                <!-- <input type="text" name="newItem" id="newItem" placeholder="Enter Sauces" required> -->
+                <input type="text" name="newItem" id="newSaucesItem" placeholder="Enter Sauces" required oninput="checkSaucesItem()">
+                <div id="saucesItemMessage" class="food-item-message"></div>
+                <input type="hidden" name="newItemType" value="sauces">
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn" onclick="document.getElementById('addSauces').style.display='none'">Cancel</button>
+                    <button type="submit" class="submitbtn" id="saucesSubmitBtn">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Add Drinks Modal -->
+    <div id="addDrinks" class="modal">
+        <span class="close" title="Close Modal" onclick="document.getElementById('addDrinks').style.display='none'">&times;</span>
+        <form class="modal-content" method="post">
+            {% csrf_token %}
+            <div class="modal-container">
+                <h1>Add Drinks</h1>
+                <!-- <input type="text" name="newItem" id="newItem" placeholder="Enter Extras" required> -->
+                <input type="text" name="newItem" id="newDrinksItem" placeholder="Enter Extras" required oninput="checkDrinksItem()">
+                <div id="drinksItemMessage" class="food-item-message"></div>
+                <input type="hidden" name="newItemType" value="drinks">
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn" onclick="document.getElementById('addDrinks').style.display='none'">Cancel</button>
+                    <button type="submit" class="submitbtn" id="drinksSubmitBtn">Submit</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+                                        
+    
+<script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+        const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+        const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+        const overlay = document.querySelector(".overlay");
+
+        mobileMenuIcon.addEventListener("click", function() {
+            mobileNavPanel.classList.toggle("show");
+            mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+        });
+
+    });
+    
+    // Function to check if Food item exists
+    function checkFoodItem() {
+    const newItemInput = document.getElementById('newItem');
+    const newItemValue = newItemInput.value.trim();
+    const foodItemMessage = document.getElementById('foodItemMessage');
+    const submitBtn = document.getElementById('submitBtn'); // Add this line
+
+    if (newItemValue !== '') {
+        fetch(`/check_food_item_exists/?item_name=${encodeURIComponent(newItemValue)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    foodItemMessage.textContent = "The food item already exists. Please pick another item.";
+                    // Disable submit button
+                    submitBtn.disabled = true; // Use the submitBtn variable
+                } else {
+                    foodItemMessage.textContent = "";  // Clear the message
+                    // Enable submit button
+                    submitBtn.disabled = false; // Use the submitBtn variable
+                }
+            })
+            .catch(error => {
+                console.error('Error checking food item:', error);
+            });
+    } else {
+        foodItemMessage.textContent = "";  // Clear the message if input is empty
+        submitBtn.disabled = false; // Ensure the button is enabled when input is empty
+    }
+}
+
+
+function checkSaucesItem() {
+    const newItemInput = document.getElementById('newSaucesItem');
+    const newItemValue = newItemInput.value.trim();
+    const saucesItemMessage = document.getElementById('saucesItemMessage');
+    const submitBtn = document.getElementById('saucesSubmitBtn'); // Add this line
+
+    if (newItemValue !== '') {
+        fetch(`/check_food_item_exists/?item_name=${encodeURIComponent(newItemValue)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    saucesItemMessage.textContent = "The sauce item already exists. Please pick another item.";
+                    // Disable submit button
+                    saucesSubmitBtn.disabled = true; // Use the submitBtn variable
+                } else {
+                    saucesItemMessage.textContent = "";  // Clear the message
+                    // Enable submit button
+                    saucesSubmitBtn.disabled = false; // Use the submitBtn variable
+                }
+            })
+            .catch(error => {
+                console.error('Error checking sauces item:', error);
+            });
+    } else {
+        saucesItemMessage.textContent = "";  // Clear the message if input is empty
+        submitBtn.disabled = false; // Ensure the button is enabled when input is empty
+    }
+}
+
+function checkDrinksItem() {
+    const newItemInput = document.getElementById('newDrinksItem');
+    const newItemValue = newItemInput.value.trim();
+    const drinksItemMessage = document.getElementById('drinksItemMessage');
+    const submitBtn = document.getElementById('drinksSubmitBtn'); // Add this line
+
+    if (newItemValue !== '') {
+        fetch(`/check_food_item_exists/?item_name=${encodeURIComponent(newItemValue)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    drinksItemMessage.textContent = "The drink item already exists. Please pick another item.";
+                    // Disable submit button
+                    drinksSubmitBtn.disabled = true; // Use the submitBtn variable
+                } else {
+                    drinksItemMessage.textContent = "";  // Clear the message
+                    // Enable submit button
+                    drinksSubmitBtn.disabled = false; // Use the submitBtn variable
+                }
+            })
+            .catch(error => {
+                console.error('Error checking drinks item:', error);
+            });
+    } else {
+        drinksItemMessage.textContent = "";  // Clear the message if input is empty
+        submitBtn.disabled = false; // Ensure the button is enabled when input is empty
+    }
+}
+
+
+
+
+  
+  </script>
+<script src="{% static 'js/modal.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+  
+    
+</body>
+
+
+
+</html>
+
+
+
+{% endblock content %}
+
+
+

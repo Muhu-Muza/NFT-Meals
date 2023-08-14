@@ -1,0 +1,208 @@
+{% load static %}
+
+{% block content%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+</head>
+<body class="selection">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                    <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+    
+                </ul>
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+
+              <div class="mobile-nav-panel">
+                <ul>
+                  <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+                  <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+                  <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+                  <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+                  <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+                  {% endif %}
+                  
+                  <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+  
+              </ul>
+            </div>
+
+
+              <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>   
+
+    </div>
+
+
+    </div>
+
+    <div class="order-content orders">
+        <div class="order-list-1 px">
+            <div class="users-header">
+                <div class="users" style="font-size: 22px;"><h1>USERS</h1></div>
+                <!-- <div class="add-user-button">
+                    <button><a href="{% url 'add_user' %}">Add User</a></button>
+                </div> -->
+            </div>
+            <table class="food-menu">
+                <thead>
+                    <tr>
+                        <th colspan="1" class="table-head"><h2>Name</h2></th>
+                        <th colspan="1" class="table-head"><h2>Email Address</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td class="menu-name">{{ user.first_name }} {{ user.last_name }}</td>
+                        <td class="choice">{{ user.email }}</td>
+                        <td class="action">
+                            <button class="delete-btn" data-user-id="{{ user.id }}" data-user-name="{{ user.first_name }} {{ user.last_name }}" onclick="openDeleteModal(this)">Delete</button>
+                        </td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+
+    <!-- Delete User Modal -->
+    <div id="deleteUserModal" class="modal">
+        <span onclick="closeDeleteModal()" class="close" title="Close Modal">&times;</span>
+        <form class="modal-content" method="post">
+            {% csrf_token %}
+            <div class="modal-container">
+                <h1>Delete User</h1>
+                <p>Are you sure you want to delete user <span id="userName"></span>?</p>
+                <input type="hidden" name="userId" id="userIdInput" value="">
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn" onclick="closeDeleteModal()">Cancel</button>
+                    <button type="submit" class="deletebtn">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Function to open the delete modal
+        function openDeleteModal(button) {
+            const userId = button.getAttribute('data-user-id');
+            const userName = button.getAttribute('data-user-name');
+    
+            // Set the user's name in the modal
+            document.getElementById('userName').innerText = userName;
+            // Set the user's ID in the hidden input field
+            document.getElementById('userIdInput').value = userId;
+            // Display the modal
+            document.getElementById('deleteUserModal').style.display = 'block';
+        }
+    
+        // Function to close the delete modal
+        function closeDeleteModal() {
+            document.getElementById('deleteUserModal').style.display = 'none';
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the modal element
+            const modal = document.getElementById('deleteUserModal');
+            // Get the button that opens the modal
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+    
+            // Function to open the modal
+            function openModal() {
+                modal.style.display = 'block';
+            }
+    
+            // Function to close the modal
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+    
+            // Add event listeners to the delete buttons to open the modal
+            deleteButtons.forEach(deleteButton => {
+                deleteButton.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-user-id');
+                    const confirmDeleteButton = document.getElementById('confirmDelete');
+                    const cancelDeleteButton = document.getElementById('cancelDelete');
+    
+                    // Add event listener to the confirm delete button to actually delete the user
+                    confirmDeleteButton.addEventListener('click', function () {
+                        // Perform the deletion here using AJAX or fetch to make a server request
+                        // For example, you can use the user ID to send a DELETE request to the server
+                        // Once the user is deleted, you can reload the page or update the table to reflect the changes
+    
+                        // After deletion, close the modal
+                        closeModal();
+                    });
+    
+                    // Add event listener to the cancel delete button to close the modal without deleting the user
+                    cancelDeleteButton.addEventListener('click', function () {
+                        closeModal();
+                    });
+    
+                    // Open the modal when the delete button is clicked
+                    openModal();
+                });
+            });
+        });
+    </script>
+
+  <script>
+  
+  document.addEventListener("DOMContentLoaded", function() {
+        const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+        const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+        const overlay = document.querySelector(".overlay");
+
+        mobileMenuIcon.addEventListener("click", function() {
+            mobileNavPanel.classList.toggle("show");
+            mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+        });
+
+    });
+
+  </script>
+  
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+
+
+{% endblock content %}
+
+
+
+

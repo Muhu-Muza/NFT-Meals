@@ -1,0 +1,172 @@
+{% load static %}
+
+{% load custom_filters %}
+
+{% block content%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Menu System</title>
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/rem-fonts.css' %}">
+</head>
+<body class="selection">
+    <div class="header-alt">
+        <div class="nav">
+            <div class="logo"><img src="{% static 'img/logo.png' %}" width="100px" height="80px"></div> 
+            <div class="nav-links">
+                
+                <ul>
+                    <li class="{% if request.path == '/book/' %}active{% endif %}">
+                        <a href="{% url 'book' %}">Book</a>
+                    </li>
+                    <li class="{% if request.path == '/selection/' %}active{% endif %}"><a href="{% url 'selection' %}">Selection</a></li>
+                    {% if user.is_superuser %}
+                    <li class="{% if request.path == '/orders/' %}active{% endif %}"><a href="{% url 'orders' %}" >Orders</a></li>
+                    <li class="{% if request.path == '/menu/' %}active{% endif %}"><a href="{% url 'menu' %}" >Foods</a></li>
+                    <li class="{% if request.path == '/users/' %}active{% endif %}"><a href="{% url 'users' %}" >Users</a></li>
+                    <li class="{% if request.path == '/menu_edit/' %}active{% endif %}"><a href="{% url 'menu_edit' %}">Edit Menu</a></li>
+                    <!-- <li class="{% if request.path == '/reports/' %}active{% endif %}"><a href="{% url 'reports' %}" >Reports</a></li> -->
+                    {% endif %}
+                    
+                    <div class="logout-btn-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+    
+                </ul>
+            </div>
+            <div class="mobile-menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+              <div class="mobile-nav-panel">
+                <ul>
+                  <a href="{% url 'book' %}"><li class="{% if request.path == '/book/' %}active{% endif %}">Book</li></a>
+                  <a href="{% url 'selection' %}"><li class="{% if request.path == '/selection/' %}active{% endif %}">Selection</li></a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'orders' %}" ><li class="{% if request.path == '/orders/' %}active{% endif %}">Orders</li></a>
+                  <a href="{% url 'menu' %}" ><li class="{% if request.path == '/menu/' %}active{% endif %}">Foods</li></a>
+                  <a href="{% url 'users' %}" ><li class="{% if request.path == '/users/' %}active{% endif %}">Users</li></a>
+                  <a href="{% url 'menu_edit' %}"><li class="{% if request.path == '/menu_edit/' %}active{% endif %}">Edit Menu</li></a>
+                  {% endif %}
+                  
+                  <a href="{% url 'logout' %}"><li><button type="button" class="out-btn">Logout</button></a></li>
+  
+              </ul>
+            </div>
+
+            <div class="logout-btn"><a href="{% url 'logout' %}"><button type="button">logout</button></a></div>
+
+        </div>
+        
+        <!-- <div class="hero selection-hero">
+            <div class="hero-item hero-top"><h2>SELECTION</h2></div>
+            <div class="hero-item hero-bottom"><h4>MY MEAL</h4></div>
+        </div> -->
+
+    </div>
+
+    <div class="content">
+        <div class="content-img px">
+            <img src="{% static 'img/food.jpg' %}" width="100%" height="100%" alt="A nice dish">
+            <div class="image-text">“First we eat, then we do everything else.”
+                – M.F.K. Fisher
+                
+                </div>
+        </div>
+        <div class="content-info px">
+            <div class="choice-title"><h2>My Choices</h2></div>
+        
+            {% if now|time_between:"00:00:00 05:59:59" %}
+                <div class="selection-alert">
+                    <div class="choice-info">
+                        <p>Sorry, it's past time. You can't make an order now.</p>
+                    </div>
+                </div>
+                {% elif now|time_between:"18:00:00 23:59:59" %}
+                <div class="selection-alert">
+                    <div class="choice-info">
+                        <p>Sorry, it's past time. You can't make an order now.</p>
+                    </div>
+                </div>
+            {% elif user_orders %}
+                <div class="grid-container my-grid">
+                    {% for order in user_orders %}
+                        {% for food_item in order.food_items.all %}
+                            <div class="grid-item">
+                                <button class="selection-btn" disabled><span>{{ food_item.name }}</span></button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <!-- Show "Edit Choices" button if the user has made an order -->
+                <div class="choice-btn">
+                    <a href="{% url 'edit_selection' %}"><button><span>Edit Choices</span></button></a>
+                </div>
+            {% else %}
+                <div class="selection-alert">
+                    <div class="choice-info">
+                        <p>No selection made.<br><br>
+                        Please redirect to the Book page to make a lunch order.</p>
+                    </div>
+                    <!-- Show "Book" button if the user has not made an order -->
+                    <div class="choice-btn">
+                        <a href="{% url 'book' %}"><button><span>Book</span></button></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>       
+    </div>
+
+
+    <script>
+
+        window.addEventListener('load', function () {
+                const contentInfo = document.querySelector('.content-info');
+                const contentImg = document.querySelector('.content-img');
+
+                function setHeights() {
+                    if (contentInfo != null && contentImg != null) {
+                        const listHeight = contentInfo.offsetHeight;
+                        const imgHeight = contentImg.offsetHeight;
+                        const maxHeight = Math.max(listHeight, imgHeight);
+                        contentInfo.style.minHeight = maxHeight + 'px';
+                        contentImg.style.minHeight = maxHeight + 'px';
+                    }
+
+                }
+
+                setHeights(); // Set initial heights on page load
+
+                window.addEventListener('resize', setHeights); // Update heights on window resize
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const mobileMenuIcon = document.querySelector(".mobile-menu-icon");
+                const mobileNavPanel = document.querySelector(".mobile-nav-panel");
+                const overlay = document.querySelector(".overlay");
+
+                mobileMenuIcon.addEventListener("click", function() {
+                    mobileNavPanel.classList.toggle("show");
+                    mobileMenuIcon.classList.toggle("open"); // Toggle the "open" class
+                });
+
+            });
+
+
+      </script>
+      
+      <script src="{% static 'js/main.js' %}"></script>
+    
+</body>
+</html>
+
+
+
+{% endblock content %}

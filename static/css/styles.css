@@ -1,0 +1,1636 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100%;
+    width: 100%;
+    font-family: "REM", sans-serif;
+    background-color: #c3cace;
+}
+
+/* Navigation starts here */
+.header {
+    height: 45%;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
+        url(../img/hero.jpg);
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 16px 32px;
+    position: relative;
+}
+
+.nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    display: block;
+}
+
+.nav-links ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-links ul li {
+    /* margin-right: 20px; */
+    list-style: none;
+    display: inline-block;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.nav-links ul li::after {
+    content: "";
+    width: 0;
+    height: 2px;
+    background: #aca597;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
+/* .nav-links li:last-child {
+  margin-right: 0;
+} */
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #d7d9db;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 0 15px;
+}
+
+.nav-links ul li#droplink::after {
+    display: none;
+}
+
+.nav-links ul li#droplink:hover::after {
+    display: none;
+}
+
+.nav-links ul li.drop-item::after {
+    display: none;
+}
+
+.nav-links ul li.drop-item:hover {
+    background-color: #27276e;
+}
+
+/* Style for the selected nav item */
+.nav-links ul li.active::after {
+    content: "";
+    width: 70%;
+    height: 2px;
+    background: #bbb3a4; /* Change this color to your preference */
+    display: block;
+    margin: auto;
+    transition: 0.4s;
+}
+
+
+ul li ul.dropdown li {
+    display: block;
+    padding: 5px 0px;
+}
+
+/* ul li a:hover {
+    background: #112c66;
+} */
+ul li:hover ul.dropdown {
+    display: block;
+}
+
+.nav-links span {
+    font-size: 12px;
+}
+
+/* Style for the logout button */
+.logout-btn button {
+    padding: 5px 10px;
+    /* border: 1px solid #af0026; */
+    background-color: #af0026;
+    color: #aca597;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.logout-btn button:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    color: #fefefe;
+    transition: box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.logout-btn-btn button {
+    padding: 5px 10px;
+    /* border: 1px solid #af0026; */
+    background-color: #af0026;
+    color: #aca597;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.logout-btn-btn button:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    color: #fefefe;
+    transition: box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* navigation ends here */
+
+/* hero section start here */
+.hero {
+    margin: 2rem auto;
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-item {
+    padding: 20px 0;
+}
+
+.hero-top {
+    color: #aca597;
+    font-size: 35px;
+}
+
+.hero-bottom {
+    font-size: 30px;
+    color: #d7d9db;
+}
+
+/* hero ends here */
+
+/* main content starts here */
+
+.header-alt {
+    width: 100%;
+    height: auto;
+    padding: 16px 32px;
+    /* background-color: #866C5D; */
+    background-color: #00001c;
+}
+
+.main {
+    /* min-height: 100%; */
+    /* background-color: #e9e8e9; */
+    background-color: #c3cace;
+    padding: 20px 45px;
+}
+
+.table-container {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.table-column {
+    flex: 1;
+    padding: 13px;
+}
+
+.item-head {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #bbb3a4;
+    border-radius: 6px;
+    margin: 5px 0;
+    color: #191919;
+    text-align: center;
+}
+
+.label-item {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    padding-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 6px;
+    margin: 5px 0;
+    padding-left: 20px;
+    color: #705a4e;
+}
+
+.label-item::before {
+    content: "\2713";
+    /* Unicode code for the checkmark symbol */
+    position: absolute;
+    top: 50%;
+    /*Align the tick vertically to the middle of the label item */
+    right: 10px;
+    /* Align the tick to the right with 10px padding */
+    transform: translateY(-50%);
+    /*Center the tick vertically */
+    font-size: 14px;
+    width: 20px;
+    line-height: 16px;
+    opacity: 0;
+}
+
+.label-item.selected {
+    background-color: #e9e1e9;
+    border: 1px solid #e9e1e9;
+}
+
+.label-item.selected::before {
+    opacity: 1;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn button {
+    margin: 1rem;
+    padding: 10px 30px;
+    background-color: #00001c;
+    border-radius: 7px;
+    border: 1px solid #00001c;
+    color: #aca597;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn button:hover {
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.8);
+    color: #fefefe;
+    transition: box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.btn button:hover {
+    cursor: pointer;
+}
+
+/* main content ends here */
+
+/* selection page specific styles */
+
+.selection {
+    min-height: 700px;
+    width: 100%;
+    font-family: "REM", sans-serif;
+    background-color: #c3cace;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    width: 100%;
+    padding: 50px;
+}
+
+.content-content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    padding: 50px;
+    min-height: 690px;
+}
+
+.content-img {
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+    position: relative;
+    opacity: 0.7;
+ }
+
+ .image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 30px;
+    color: #0a0a0a;
+    width: auto;
+}
+  
+
+.content-img img {
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.content-info {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 60%;
+    /* height: 100%; */
+    min-height: 450px;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.groceries {
+    background-image: linear-gradient(rgba(4, 9, 30, 0.55), rgba(4, 9, 30, 0.55)),
+        url(../img/meal.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
+
+
+.content-info-info {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    /* padding: 32px; */
+}
+
+.content-info-menu {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, rgb(244, 238, 115), rgb(240, 240, 238));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px;
+}
+
+.content-info-menu-menu {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 30%;
+    min-height: 516px;
+    border-radius: 20px;
+    /* background-color: #fff; */
+    background-image: linear-gradient(to bottom right, rgb(253, 253, 185), rgb(253, 253, 250));
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 32px;
+    margin: 20px;
+    /* position: relative; */
+}
+
+.px {
+    padding: 0 16px;
+    /* margin: 20px; */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.grid-container-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.grid-item {
+    padding: 10px;
+    text-align: center;
+}
+
+.choice-title {
+    padding: 32px 0px;
+}
+
+.menu-title {
+    padding: 32px 0px;
+}
+
+.choice-title h2 {
+    /* color:#15152c; */
+    color: #565656;
+    font-size: 35px;
+}
+
+.choice-info {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container button {
+    padding: 10px 20px;
+    border: 1px solid #00001c;
+    background-color: #00001c;
+    border-radius: 5px;
+    min-width: 6rem;
+}
+
+.grid-container button[disabled] {
+    opacity: 0.6;
+    min-width: 7rem;
+}
+
+.grid-container button span {
+    color: #aca597;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.grid-container-menu button {
+    padding: 10px 20px;
+    border: 1px solid #00001c;
+    background-color: #00001c;
+    border-radius: 5px;
+    min-width: 6rem;
+}
+
+.grid-container-menu button[disabled] {
+    opacity: 0.6;
+    min-width: 7rem;
+}
+
+.grid-container-menu button span {
+    color: #aca597;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.choice-btn {
+    margin: 32px 0;
+    margin-top:auto;
+}
+
+.choice-menu-btn {
+    margin-top:auto;
+    /* position: absolute;
+    bottom: 20px; */
+}
+
+/* Style for the button-like anchor tag */
+.edit-btn-container a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn-container a:hover {
+    background-color: #0056b3;
+}
+
+.choice-btn button {
+    padding: 10px 30px;
+    border: 1px solid #00001c;
+    background-color: #00001c;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #aca597;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.choice-btn button:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    color: #fefefe;
+    transition: box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.order-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0px 20px;
+}
+
+.orders {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.5), rgba(4, 9, 30, 0.5)), url(../img/foodbgg.jpg);
+    align-items: center;
+    flex-direction: column;
+    min-height: 1200px;
+}
+
+/* .orders h1 {
+  padding: 10px;
+  color: white;
+} */
+
+.users {
+    /* padding: 40px; */
+    color: rgb(40, 37, 37);
+  }
+
+
+.order-img {
+    width: 35%;
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+    min-height: 300px;
+    /* Set the initial minimum height */
+}
+
+.order-img img {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.order-list {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    /* Set the initial minimum height */
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px;
+    box-sizing: border-box;
+    /* Include padding in height calculation */
+}
+
+.order-list-1 {
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+    width: 100%;
+    height: auto;
+    min-height: 520px; 
+    border-radius: 10px;
+    /* background-color: #fff; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 32px;
+    box-sizing: border-box;
+}
+
+.order-list-2 {
+  width: 100%;
+  height: auto;
+  min-height: 600px; 
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:0px 32px;
+  box-sizing: border-box; 
+}
+
+.order-list-2 h1 {
+    font-size: 35px;
+    padding: 32px 0px;
+    color: white;
+}
+
+/* Style for the table */
+.food-menu {
+    width: 90%;
+    border-collapse: seperate;
+    background-color: white;
+    margin-bottom: 50px;
+    border-radius: 5px;
+}
+
+.table-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 20px;
+  }
+
+  
+
+.table-body {
+    background-color: #f9f9f9;
+    /* Add background color to the tbody */
+}
+
+.menu-item {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 20px;
+}
+
+.quantity {
+    font-size: 16px;
+    color: #555;
+    padding: 12px 20px;
+    text-align: right;
+  }
+  
+  .food-menu tr:nth-child(even) {
+    background-color: #f2f2f2;
+    width: 100%;
+}
+
+thead {
+    margin-bottom: 2rem;
+}
+
+.table-head {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 20px;
+    text-align: left;
+}
+
+.table-head-2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 20px;
+    text-align: left;
+}
+
+.menu-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 20px;
+}
+
+.choice {
+    font-size: 15px;
+    color: #555;
+    padding: 12px 20px;
+    text-align: left;
+}
+
+/* .menu-btn {
+    opacity: 0.7;
+    cursor: pointer;
+    display: inline-flex;
+}
+
+.menu-btn span {
+    display: inline;   
+} */
+
+.menu-btn {
+    opacity: 0.7;
+    cursor: pointer;
+    border: none;
+    width: 8rem;
+    background-color: transparent;
+    padding: 0;
+    /* Remove padding from the button */
+}
+
+.menu-btn span {
+    display: inline-flex;
+    /* Display the span as an inline-flex element */
+    align-items: center;
+    /* Align items (icon and text) vertically */
+}
+
+.menu-btn i {
+    /* Add any desired styles for the icon */
+    font-size: 18px;
+    /* Adjust the font size of the icon as needed */
+    margin-left: 5px;
+    /* Add a small space between the icon and the word */
+}
+
+/* MODAL STYLES */
+
+.cancelbtn,
+.deletebtn,
+.submitbtn {
+    width: 20%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: blanchedalmond;
+}
+
+
+.order-head {
+    position: relative;
+}
+
+/* Inside your main CSS file */
+.print-button {
+    text-align: center;
+    margin-top: auto;
+    position: absolute;
+    top: -5px;
+    right: -120px;
+    transform: translate(-20px, 50%);
+}
+
+.print-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.print-button a:hover {
+    background-color: #0056b3;
+}
+
+/* .add-user-button {
+    text-align: center;
+    margin-top: auto;
+    position: absolute;
+    top: 10pxpx;
+    right: 10px;
+    transform: translate(-20px, 50%);
+}
+
+.add-user-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.add-user-button a:hover {
+    background-color: #0056b3;
+} */
+
+
+
+/* Add a color to the cancel button */
+.cancelbtn {
+    background-color: #aaa9a9;
+}
+
+.deletebtn {
+    background-color: #f3583d;
+}
+
+.submitbtn {
+    background-color: #7b68ee;
+}
+
+.cancelbtn:hover {
+    background-color: #757575;
+}
+
+.deletebtn:hover {
+    background-color: #df2403;
+}
+
+.submitbtn:hover {
+    background-color: #6353be;
+}
+
+.modal-container {
+    padding: 16px;
+    text-align: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(71, 78, 93, 0.8);
+    padding-top: 50px;
+}
+
+.modal-container h1 {
+    margin-bottom: 20px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    padding: 30px 15px;
+    background-color: #fefefe;
+    margin: 5% auto 10% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 65%;
+}
+
+/* The Modal Close Button (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+.clearfix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: 20px auto auto auto;
+}
+
+/* Style for the input field */
+#newItem {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#newItem::placeholder {
+    color: #999;
+}
+
+#newItem:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#newSaucesItem {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#newSaucesItem::placeholder {
+    color: #999;
+}
+
+#newSaucesItem:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#newDrinksItem {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#newDrinksItem::placeholder {
+    color: #999;
+}
+
+#newDrinksItem:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.cil-plus {
+    margin-right: 5px;
+}
+
+.selection-hero {
+    display: none;
+}
+
+  .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+/* ... (Your existing styles) ... */
+
+
+
+.my-grid{
+    margin-top: 2rem;
+}
+
+.bk {
+    margin-top: 4rem;
+}
+
+.choice-info {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.selection-alert {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: auto;
+}
+
+.book-alert {
+    margin-top: 6rem;
+}
+
+.report {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.2), rgba(4, 9, 30, 0.2)), url(../img/reports.jpeg);
+    align-items: center;
+    min-height: 680px;
+    margin-top: -32px;
+}
+
+
+.mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Off-screen initially */
+    width: 250px;
+    height: 100%;
+    /* background-color: rgba(0, 0, 28, 0.9); */
+    background-color: #00001c;
+    text-decoration: none;
+    transition: left 0.3s ease-in-out;
+    z-index: 999;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim overlay color */
+    display: none;
+    z-index: 998;
+}
+
+.mobile-nav-panel.show {
+    left: 0; /* Show the panel when class "show" is added */
+}
+
+.mobile-nav-panel.show ~ .overlay {
+    display: block; /* Show the overlay when panel is open */
+}
+
+/* .mobile-nav-panel .close-btn {
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+} */
+
+.mobile-nav-panel ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mobile-nav-panel ul li {
+    padding: 15px;
+    border-bottom: 1px solid #3d4157;
+    background-color: rgba(0, 0, 28, 0.4);
+    /* background-color: #000024; */
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.mobile-nav-panel ul li:active {
+    padding: 15px;
+    border-bottom: 1px solid #3d4157;
+    background-color: #35357a;
+}
+
+.mobile-nav-panel ul li a {
+    text-decoration: none;
+    color: #fff;
+    /* font-size: 17px;
+    font-weight: 900; */
+}
+
+.mobile-nav-panel a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.mobile-nav-panel a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.mobile-menu-icon .bar {
+    width: 25px;
+    height: 3px;
+    margin: 4px auto;
+    /* background-color: #000; */
+    transition: 0.4s;
+}
+
+.mobile-menu-icon {
+    display: none; /* Hide the hamburger icon on larger screens */
+}
+
+
+.mobile-menu-icon.open .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-icon.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-icon.open .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-4px, -6px);
+}
+
+.out-btn {
+  width: 100%;
+  background-color: #ca012c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #fefefe;
+  font-weight: 900;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+    .mobile-nav-panel {
+        left: -250px; /* Hide the panel by default */
+    }
+
+    .nav-links {
+        display: none; /* Hide the regular navigation links on smaller screens */
+    }
+
+    .mobile-menu-icon {
+        display: block; /* Show the hamburger icon on smaller screens */
+    }
+}
+
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+
+    .cancelbtn,
+    .submitbtn,
+    .deletebtn {
+        width: 100%;
+    }
+}
+
+/* Adjust layout for screens up to 768px wide */
+@media (max-width: 768px) {
+    /* ... (Your existing responsive styles) ... */
+
+    /* Show mobile menu icon and hide regular menu items */
+    .mobile-menu-icon {
+        display: block;
+        padding-right: 16px;
+    }
+
+    .logout-btn {
+        display: none;
+    }
+
+    .logout-btn-btn {
+        display: block;
+    }
+
+    .cancelbtn,
+    .submitbtn,
+    .deletebtn {
+        width: 100%;
+    }
+
+    .deletebtn {
+        height: auto;
+        margin: 50px;
+    }
+
+    .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #d7d9db;
+        margin: 6px 0;
+    }
+
+    .nav-links ul {
+        display: none;
+        /* Hide regular menu items for smaller screens */
+        position: absolute;
+        top: 50px;
+        left: 240px;
+        background-color: rgba(4, 9, 30, 0.3);
+        width: 50%;
+        max-width: 240px;
+    }
+
+    .nav-links ul.show {
+        display: flex;
+        /* Show menu items when the menu is open */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links ul li {
+        padding: 10px 0;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .logout-btn-btn {
+        display: none;
+    }
+}
+
+/* Adjust layout for screens up to 768px wide */
+@media (max-width: 768px) {
+    .order-list-2 h1 {
+        padding: 12px 0px 27px;
+        font-size: 25px;
+    }
+
+    .main {
+        padding: 0px;
+    }
+
+    /* Navigation */
+    .nav-links ul li {
+        padding: 5px;
+        /* Reduce padding for smaller screens */
+    }
+
+    /* Hero Section */
+    .hero {
+        margin: 1rem auto;
+        /* Adjust margin for smaller screens */
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    /* Header Alt */
+    .header-alt {
+        padding: 10px;
+        /* Adjust padding for smaller screens */
+        /* background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
+            url(../img/hero.jpg); */
+        background-repeat: no-repeat;
+        background-size: cover;
+        /* position: relative; */
+        height: 45%;
+        width: 100%;
+    }
+
+    /* Content */
+    .content {
+        flex-direction: column;
+        /* Stack content vertically on smaller screens */
+        /* height: auto; */
+        padding: 20px;
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Content Image */
+    /* .content-img {
+        width: 100%; 
+    } */
+
+    /* Content Info */
+    .content-info {
+        width: 100%;
+        /* padding-right: 40px;  */
+    }
+
+    /* Content Info Menu */
+    .content-info-menu {
+        width: 100%;
+        /* Take full width on smaller screens */
+        margin: 16px;
+        /* Adjust margin for smaller screens */
+    }
+
+    /* Grid Container */
+    /* .grid-container {
+        flex-direction: column; 
+    }
+     */
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
+    }
+
+    .grid-item {
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Choice Title */
+    .choice-title h2 {
+        font-size: 28px;
+        /* Adjust font size for smaller screens */
+    }
+
+    /* Choice Button */
+    .choice-btn button {
+        margin-top: 32px;
+        /* Adjust margin for smaller screens */
+    }
+
+    /* Order Content */
+    .order-content {
+        flex-direction: column;
+        /* margin: auto;  */
+        padding: 20px;
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Order List */
+    .order-list {
+        width: 100%;
+        /* Take full width on smaller screens */
+        min-height: 200px;
+    }
+
+    .order-list-1 {
+        width: 100%; /* Take full width on smaller screens */
+        min-height: 200px; 
+    }
+
+    .orders {
+        min-height: 670px;
+    }
+
+    .food-menu tr:nth-child(even) {
+    background-color: #f2f2f2;
+    width: 100%;
+  }
+
+  .menu-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 10px;
+  }
+
+  .food-menu {
+    width: 100%;
+  }
+
+  .choice {
+    font-size: 14px;
+    color: #555;
+    padding: 8px 10px;
+    text-align: left;
+  }
+
+    /* Table Header and Body */
+    .table-header,
+    .table-body {
+        font-size: 18px;
+        /* Adjust font size for smaller screens */
+    }
+    
+    .table-head {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        padding: 8px 10px;
+        text-align: left;
+      }
+    
+      .table-head-2 {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        padding: 8px 10px;
+        text-align: left;
+      }
+    
+    /* Menu Button */
+    .menu-btn {
+        width: 8rem;
+        /* Adjust width for smaller screens */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        width: 80%;
+        /* Adjust width for smaller screens */
+    }
+
+    /* Input Field */
+    #newItem {
+        width: 100%;
+        /* Take full width on smaller screens */
+    }
+    #newSaucesItem {
+        width: 100%;
+        /* Take full width on smaller screens */
+    }
+    #newDrinksItem {
+        width: 100%;
+        /* Take full width on smaller screens */
+    }
+
+    .nav-links.show ul {
+        display: flex;
+    }
+
+    .content-content {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        background-image: none;
+    }
+
+    .content-info-info {
+        /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+        width: 100%;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        padding: 20px;
+    }
+
+    .content-info-menu-menu {
+        width: 100%;
+        /* height: 100%; */
+        min-height: 350px;
+        border-radius: 20px;
+        /* background-color: #fff; */
+        background-image: linear-gradient(to bottom right,
+                rgb(245, 245, 142),
+                rgb(253, 253, 250));
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        padding: 32px;
+        /* margin: px; */
+    }
+
+    .choice-menu-btn {
+        /* position: static;
+        bottom: auto; */
+        margin-top: auto;
+    }
+    
+    .menu-title {
+        padding-top: 32px;
+    }
+
+    .content-img {
+        display: none;
+    }
+
+    .px {
+        padding: 0px;
+        margin: 0px 0px 20px 0px;
+    }
+
+    .content {
+        background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
+        url(../img/food.jpg);
+        min-height: 630px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .selection-hero {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    /* .order-img {
+        display: none;
+    } */
+
+    /* .groceries {
+        background-image: none;
+    } */
+
+    .hero-top {
+        color: #aca597;
+        font-size: 30px;
+    }
+
+    .selection {
+        min-height: 800px;
+        min-width: auto;
+
+    }
+
+.hero-bottom {
+    font-size: 27px;
+    color: #d7d9db;
+}
+.users {
+    font-size: 10px;
+    margin: 3px;
+}
+
+.table-container {
+    margin-top: 1rem;
+    width: auto;
+    /* margin-left: -35px; */
+    margin-left: auto;
+    max-width: -60px;
+    align-items: center;
+}
+
+
+
+}
+
+/* Style for the Delete button */
+.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  @media screen and (min-width: 768px) and (max-width: 896px) {
+    
+    .grid-container-menu button {
+        padding: 10px;
+        width: 7rem;
+    }
+
+    .grid-container-menu {
+        gap: 5px;
+    }
+
+  }
+
+
+  /* Tablets - Landscape */
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Your CSS rules for tablets in landscape mode */
+
+    .grid-container-menu button {
+        padding: 10px;
+        width: 7rem;
+    }
+
+    .grid-container-menu {
+        gap: 5px;
+    }
+
+}
+
+
+  /* Tablets - Portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* Your CSS rules for tablets in portrait mode */
+
+
+}
+
+.reports-container{
+    color: #e28913;
+    
+    display: flex;
+    margin: 30px;
+    
+    max-width: 1300px;
+    
+    
+}
+
+/* Styling for the card container */
+.report-content {
+
+    width: 300px;
+    height: 150px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    background-color: rgb(247, 228, 201);
+    border-radius: 10px;
+    margin-left: 100px;
+    padding: 10px;
+    margin-right: 100px;  
+}
+
+.card-report {
+   margin-right: 350px;
+   width:300px;
+   height: 300px;
+}
+/* Styling for the heading and icon */
+.title {
+    display: flex;
+    flex-direction: row;
+  
+}
+
+.title h2 {
+    /* margin-left: 10px;
+    margin-top: -30px; */
+    font-size:11px;
+    
+    
+}
+
+
+.title i {
+    margin-left: 120px;
+    margin-right: 50px;
+    text-align: end;
+}
+
+
+
+
+  

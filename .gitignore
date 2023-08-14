@@ -1,0 +1,15 @@
+env
+env/
+db.sqlite3
+
+*.pyc
+__pycache__/
+
+
+site_static
+.env
+
+Pipfile
+Pipfile.lock
+.lock
+.idea
